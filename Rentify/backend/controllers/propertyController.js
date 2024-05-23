@@ -53,4 +53,21 @@ const getAllProperties = async (req, res) => {
 
 }
 
-module.exports = {addProperty, getAllProperties};
+const getProperty = async(req, res) => {
+
+    const {sellerId} = req.body;
+
+    try{
+        const property = await Property.find({seller: sellerId})
+
+    if(property){
+        res.status(200).json(property);
+    }else{
+        res.status(404).json({message: "No properties found!"})
+    }
+    }catch(error){
+        res.status(500).json({message: "something went wrong!"})
+    }
+}
+
+module.exports = {addProperty, getAllProperties, getProperty};
