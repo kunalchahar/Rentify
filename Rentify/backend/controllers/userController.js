@@ -50,7 +50,8 @@ const signin = async (req, res) => {
             return res.status(404).json({message: "User not found!"})
         }
 
-        const matchPassword = bcrypt.compare(password, existingUser.password);
+        const matchPassword = await bcrypt.compare(password, existingUser.password);
+
 
         if(!matchPassword){
             return res.status(400).json({message: "Wrong password!"})
