@@ -7,10 +7,14 @@ import {
    Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
+import api from '../../Axios';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Login = () => {
 
    const navigate = useNavigate();
+
+   const [loading, setLoading] = useState(false);
 
    const registerForm = () => {
       navigate('/register');
@@ -24,7 +28,6 @@ const Login = () => {
    });
 
    const handleChange = (e) => {
-      console.log(e);
       const { name, value } = e.target;
       setFormData((prevFormData) => ({
          ...prevFormData,
@@ -41,12 +44,10 @@ const Login = () => {
          password: formData.password
       };
 
-      console.log(requestBody)
+      setLoading(true);
       try {
 
-         const response = await axios.post('https://your-api-endpoint.com/submit', requestBody);
-         console.log('Response:', response.data);
-
+         const response = await api.post('/user/signin', requestBody);
          setFormData({
             email: '',
             password: ''
@@ -54,8 +55,13 @@ const Login = () => {
       } catch (error) {
          console.error('Error submitting the form:', error);
       }
+      setLoading(false);
    };
    // form data done 
+
+   if(loading){
+      return <div className="loader flex items-center justify-center min-h-screen"><ClipLoader size={80} /></div>; // Display loader
+   }
 
    return (
       <div className='flex items-center justify-center min-h-screen'>

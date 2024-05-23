@@ -28,7 +28,6 @@ const Register = () => {
     });
 
     const handleChange = (e) => {
-      console.log(e);
       const { name, value } = e.target;
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -50,7 +49,6 @@ const Register = () => {
       try {
    
         const response = await axios.post('https://your-api-endpoint.com/submit', requestBody);
-        console.log('Response:', response.data);
   
         setFormData({
          firstName: '',

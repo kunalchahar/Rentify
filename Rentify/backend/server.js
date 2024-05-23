@@ -12,8 +12,8 @@ app.use(express.json())
 
 app.use(cors())
 
-app.use("/user", userRouter)
-app.use("/property", propertyRouter)
+app.use("/api/user", userRouter)
+app.use("/api/property", propertyRouter)
 
 connectDB().then(()=>{
     app.listen(port, ()=>{
