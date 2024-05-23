@@ -5,7 +5,7 @@ const SECRET_KEY = 'rentify'
 
 const signup = async (req, res) => {
 
-    const {username, email, password, userType} = req.body;
+    const {username, email, password, userType, firstName, lastName, phoneNumber} = req.body;
 
 
     // Existing User Check
@@ -18,8 +18,11 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const result = await userModel.create({
+            firstName: firstName, 
+            lastName: lastName,
             email: email,
             password: hashedPassword, 
+            phoneNumber: phoneNumber,
             username: username,
             userType: userType
         });
