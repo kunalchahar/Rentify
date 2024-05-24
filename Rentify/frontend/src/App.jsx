@@ -7,7 +7,7 @@ import CommonRoutes from "./routes/CommonRoutes";
 import BrokerHomePage from "./modules/Broker/BrokerHomePage";
 
 const App = () => {
-  const [userType, setUserType] = useState("seller");
+  const [userType, setUserType] = useState("common");
   return (
     <div className=" max-h-screen">
       {userType === "seller" && (
@@ -24,7 +24,12 @@ const App = () => {
           <UserRoutes/>
         )
       }
-      <CommonRoutes/>
+      {
+        userType==="common" && (
+          <CommonRoutes/>
+        )
+      }
+      
     </div>
   );
 };
