@@ -50,6 +50,7 @@ const Register = () => {
          username: formData.username,
          userType: formData.userType
       };
+      console.log(requestBody)
 
       try {
 
