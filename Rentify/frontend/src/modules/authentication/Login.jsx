@@ -1,5 +1,4 @@
-import React, { useRef } from 'react'
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
    Card,
    Input,
@@ -7,27 +6,26 @@ import {
    Typography,
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
-import api from '../../Axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../StoreSlices/authSlice'; // Adjust the import path as needed
 import ClipLoader from 'react-spinners/ClipLoader';
 
 const Login = () => {
-
    const navigate = useNavigate();
+   const dispatch = useDispatch();
    const formRef = useRef(null);
-
-   const [loading, setLoading] = useState(false);
-
-   const registerForm = () => {
-      navigate('/register');
-   };
-
-   // storing from data 
 
    const [formData, setFormData] = useState({
       email: '',
       password: ''
    });
 
+   const { loading, error } = useSelector((state) => state.auth);
+
+   const registerForm = () => {
+      navigate('/register');
+   };
+   
    const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData((prevFormData) => ({
@@ -36,35 +34,26 @@ const Login = () => {
       }));
    };
 
-
    const handleSubmit = async (e) => {
       e.preventDefault();
-
       const requestBody = {
          email: formData.email,
          password: formData.password
       };
 
-      setLoading(true);
-
-      try {
-
-         const response = await api.post('/user/signin', requestBody);
-         formRef.current.reset();
-         setFormData({
-            email: '',
-            password: ''
-         });
-
-      } catch (error) {
-         console.error('Error submitting the form:', error);
-      }
-      setLoading(false);
+      dispatch(loginUser(requestBody)).then((response) => {
+         if (response.meta.requestStatus === 'fulfilled') {
+            formRef.current.reset();
+            setFormData({
+               email: '',
+               password: ''
+            });
+            navigate('/dashboard'); // Replace with your actual route
+         }
+      });
    };
 
-   // form data done 
-
-   if(loading){
+   if (loading) {
       return <div className="loader flex items-center justify-center min-h-screen"><ClipLoader size={80} /></div>; // Display loader
    }
 
@@ -113,8 +102,13 @@ const Login = () => {
                <Button type='submit' className="mt-6" fullWidth>
                   Sign In
                </Button>
+               {error && (
+                  <Typography color="red" className="mt-4 text-center font-normal">
+                     {error}
+                  </Typography>
+               )}
                <Typography color="gray" className="mt-4 text-center font-normal">
-                  Don't have a account Click to register{" "}
+                  Don't have an account?{" "}
                   <a href="#" className="font-medium text-gray-900" onClick={registerForm}>
                      Sign Up
                   </a>
@@ -122,7 +116,7 @@ const Login = () => {
             </form>
          </Card>
       </div>
-   )
-}
+   );
+};
 
-export default Login
+export default Login;
