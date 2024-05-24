@@ -20,7 +20,7 @@ const Register = () => {
    };
    
    
-   const [userType, setUserType] = useState("renter");
+   const [userType, setUserType] = useState("buyer");
 
    const [isChecked, setIsChecked] = useState(false);
 
@@ -103,20 +103,20 @@ const Register = () => {
                            <Tabs value={userType} className="overflow-visible">
                               <TabsHeader className="relative z-0 ">
                                  <Tab
-                                    value="renter"
-                                    onClick={() => setUserType("renter")}
-                                    className={`${userType === "renter" ? "text-blue-500" : "text-gray-500"
+                                    value="buyer"
+                                    onClick={() => setUserType("buyer")}
+                                    className={`${userType === "buyer" ? "text-blue-500" : "text-gray-500"
                                        }`}
                                  >
-                                    I am a Renter
+                                    I am a buyer
                                  </Tab>
                                  <Tab
-                                    value="broker"
-                                    onClick={() => setUserType("broker")}
-                                    className={`${userType === "broker" ? "text-red-500" : "text-gray-500"
+                                    value="seller"
+                                    onClick={() => setUserType("seller")}
+                                    className={`${userType === "seller" ? "text-red-500" : "text-gray-500"
                                        }`}
                                  >
-                                    I am a Broker
+                                    I am a Seller
                                  </Tab>
                               </TabsHeader>
                            </Tabs>
