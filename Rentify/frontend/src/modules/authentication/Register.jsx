@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import api from '../../Axios';
 import {
    Card,
@@ -7,6 +6,9 @@ import {
    Checkbox,
    Button,
    Typography,
+   TabsHeader,
+   Tab,
+   Tabs,
 } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +17,15 @@ const Register = () => {
 
    const loginForm = () => {
       navigate('/login');
+   };
+   
+   
+   const [userType, setUserType] = useState("renter");
+
+   const [isChecked, setIsChecked] = useState(false);
+
+   const handleCheckboxChange = (e) => {
+      setIsChecked(e.target.checked);
    };
 
    // storing from data 
@@ -29,6 +40,7 @@ const Register = () => {
       userType: ''
    });
 
+
    const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData((prevFormData) => ({
@@ -37,9 +49,15 @@ const Register = () => {
       }));
    };
 
+   console.log(userType)
 
    const handleSubmit = async (e) => {
       e.preventDefault();
+
+      if (!isChecked) {
+         alert('Please agree to the Terms and Conditions before signing up.');
+         return;
+      }
 
       const requestBody = {
          firstName: formData.firstName,
@@ -48,7 +66,7 @@ const Register = () => {
          password: formData.password,
          phoneNumber: formData.phoneNumber,
          username: formData.username,
-         userType: formData.userType
+         userType: userType
       };
       console.log(requestBody)
 
@@ -70,6 +88,8 @@ const Register = () => {
    };
    // form data done 
 
+
+
    return (
       <div className='flex items-center justify-center min-h-screen'>
          <Card color="transparent" shadow={false} className="border-2 border-gray-400 p-9 shadow-xl w-full max-w-[34rem]">
@@ -79,10 +99,34 @@ const Register = () => {
             <Typography color="gray" className="mt-1 font-normal">
                Nice to meet you! Enter your details to register.
             </Typography>
+            <div className='w-full -mb-3 mt-4'>
+                           <Tabs value={userType} className="overflow-visible">
+                              <TabsHeader className="relative z-0 ">
+                                 <Tab
+                                    value="renter"
+                                    onClick={() => setUserType("renter")}
+                                    className={`${userType === "renter" ? "text-blue-500" : "text-gray-500"
+                                       }`}
+                                 >
+                                    I am a Renter
+                                 </Tab>
+                                 <Tab
+                                    value="broker"
+                                    onClick={() => setUserType("broker")}
+                                    className={`${userType === "broker" ? "text-red-500" : "text-gray-500"
+                                       }`}
+                                 >
+                                    I am a Broker
+                                 </Tab>
+                              </TabsHeader>
+                           </Tabs>
+                        </div>
             <form onSubmit={handleSubmit} className=" ">
                <div className=" flex flex-col w-full mt-8 gap-3">
                   <div className='flex justify-between items-center gap-8'>
                      <div className='w-1/2'>
+                        
+
                         <Typography variant="h6" color="blue-gray" className='mb-2'>
                            First Name
                         </Typography>
@@ -179,13 +223,15 @@ const Register = () => {
                   />
                </div>
                <Checkbox
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
                   label={
                      <Typography
                         variant="small"
                         color="gray"
                         className="flex items-center font-normal"
                      >
-                        I agree the
+                        I agree to the
                         <a
                            href="#"
                            className="font-medium transition-colors hover:text-gray-900"
@@ -196,7 +242,7 @@ const Register = () => {
                   }
                   containerProps={{ className: "-ml-2.5" }}
                />
-               <Button type='submit' className="mt-6" fullWidth>
+               <Button type='submit' className="mt-6 bg-blue-700" fullWidth>
                   sign up
                </Button>
                <Typography color="gray" className="mt-4 text-center font-normal">
