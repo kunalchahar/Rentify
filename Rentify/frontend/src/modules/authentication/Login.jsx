@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState } from 'react';
 import {
    Card,
@@ -13,6 +13,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 const Login = () => {
 
    const navigate = useNavigate();
+   const formRef = useRef(null);
 
    const [loading, setLoading] = useState(false);
 
@@ -45,18 +46,22 @@ const Login = () => {
       };
 
       setLoading(true);
+
       try {
 
          const response = await api.post('/user/signin', requestBody);
+         formRef.current.reset();
          setFormData({
             email: '',
             password: ''
          });
+
       } catch (error) {
          console.error('Error submitting the form:', error);
       }
       setLoading(false);
    };
+
    // form data done 
 
    if(loading){
@@ -72,7 +77,7 @@ const Login = () => {
             <Typography color="gray" className="mt-1 font-normal">
                Nice to meet you! Enter your details to login.
             </Typography>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form onSubmit={handleSubmit} ref={formRef} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                <div className="mb-1 flex flex-col gap-6">
                   <Typography variant="h6" color="blue-gray" className="-mb-3">
                      Your Email
