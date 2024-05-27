@@ -49,7 +49,6 @@ const Register = () => {
       }));
    };
 
-   console.log(userType)
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -68,7 +67,6 @@ const Register = () => {
          username: formData.username,
          userType: userType
       };
-      console.log(requestBody)
 
       try {
 

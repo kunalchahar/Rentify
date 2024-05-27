@@ -11,25 +11,26 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../StoreSlices/authSlice";
 
 const BrokerSidebar = () => {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout =()=>{
+    dispatch(logout());
+    navigate("/login")
+  }
   const sidebarValues = [
     {
       value: "Add Property",
       icon: <PresentationChartBarIcon className="h-5 w-5" />,
-      link: "/addProperty"
+      link: "/addProperty",
     },
     {
       value: "My Properties",
       icon: <ShoppingBagIcon className="h-5 w-5" />,
-      link: ""
-    },
-    {
-      value: "Logout",
-      icon: <PowerIcon className="h-5 w-5" />,
-      link: ""
+      link: "",
     },
   ];
 
@@ -41,13 +42,16 @@ const navigate = useNavigate();
         </Typography>
       </div>
       <List>
-        {sidebarValues.map((item, index)=><ListItem key={index} onClick={()=>navigate(item.link)}>
-          <ListItemPrefix>
-            {item.icon}
-          </ListItemPrefix>
-          {item.value}
-        </ListItem>)}
-        
+        {sidebarValues.map((item, index) => (
+          <ListItem key={index} onClick={() => navigate(item.link)}>
+            <ListItemPrefix>{item.icon}</ListItemPrefix>
+            {item.value}
+          </ListItem>
+        ))}
+        <ListItem onClick={handleLogout}>
+          <ListItemPrefix><PowerIcon className="h-5 w-5" /></ListItemPrefix>
+          Logout
+        </ListItem>
       </List>
     </Card>
   );
