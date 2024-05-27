@@ -89,7 +89,7 @@ const Register = () => {
 
 
    return (
-      <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex items-center justify-center min-h-full'>
          <Card color="transparent" shadow={false} className="border-2 border-gray-400 p-9 shadow-xl w-full max-w-[34rem]">
             <Typography variant="h4" color="blue-gray">
                Sign Up

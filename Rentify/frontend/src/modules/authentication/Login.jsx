@@ -22,7 +22,7 @@ const Login = () => {
   );
 
   const registerForm = () => {
-    navigate("/register");
+    navigate("/signup");
   };
 
   const handleChange = (e) => {
@@ -64,7 +64,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-full">
       <Card
         color="transparent"
         shadow={false}
