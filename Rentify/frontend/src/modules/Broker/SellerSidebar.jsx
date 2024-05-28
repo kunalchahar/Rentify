@@ -25,7 +25,7 @@ const SellerSidebar = () => {
     {
       value: "Add Property",
       icon: <PresentationChartBarIcon className="h-5 w-5" />,
-      link: "addProperty",
+      link: "/seller/addProperty",
     },
     {
       value: "My Properties",
