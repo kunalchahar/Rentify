@@ -14,11 +14,19 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Load initial state from local storage
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : {};
+const userTokenFromStorage = localStorage.getItem("token")
+  ? localStorage.getItem("token")
+  : null;
+
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: !!userTokenFromStorage,
   loading: false,
-  userInfo: {}, // for user object
-  userToken: null, // for storing the JWT
+  userInfo: userInfoFromStorage, // for user object
+  userToken: userTokenFromStorage, // for storing the JWT
   error: null,
   success: false, // for monitoring the registration process.
 };
@@ -34,8 +42,8 @@ const authSlice = createSlice({
       state.userToken = null;
       state.error = null;
       state.success = false;
-      sessionStorage.removeItem('userInfo');
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
@@ -51,9 +59,8 @@ const authSlice = createSlice({
         state.userToken = action.payload.token;
         state.success = true;
         state.isAuthenticated = true;
-        console.log(action.payload);
-        sessionStorage.setItem("userInfo", JSON.stringify(state.userInfo));
-        sessionStorage.setItem("token", state.userToken);
+        localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
+        localStorage.setItem("token", state.userToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

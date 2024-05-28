@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import { useSelector } from 'react-redux';
 
 const ProtectedSellerRoutes = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     let userType;
 
     if (token) {

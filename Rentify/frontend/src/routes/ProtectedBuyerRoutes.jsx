@@ -7,7 +7,7 @@ const BuyerRoutes = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     let userType;
 
     if (token) {

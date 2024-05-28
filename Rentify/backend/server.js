@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/api/user", userRouter)
-app.use("/api/property", propertyRouter)
+app.use("/api/properties", propertyRouter)
 
 connectDB().then(()=>{
     app.listen(port, ()=>{

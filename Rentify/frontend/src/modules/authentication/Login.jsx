@@ -3,7 +3,7 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../StoreSlices/authSlice";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "../../components/Loader"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Login = () => {
           email: "",
           password: "",
         });
-        navigate("/seller"); // Redirect to the Buyer Home Page after successful login
+        navigate("/seller/properties"); // Redirect to the Buyer Home Page after successful login
       }
       
     });
@@ -57,9 +57,7 @@ const Login = () => {
 
   if (loading) {
     return (
-      <div className="loader flex items-center justify-center min-h-screen">
-        <ClipLoader size={80} />
-      </div>
+      <Loader/>
     );
   }
 
