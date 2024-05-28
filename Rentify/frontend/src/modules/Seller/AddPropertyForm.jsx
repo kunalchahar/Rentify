@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import { Button, Input, Card, CardBody, Typography, useSelect } from '@material-tailwind/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProperty } from '../../StoreSlices/propertiesSlice';
 
 const AddPropertyForm = () => {
 
-  const {userInfo } = useSelector((state)=>state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     description: '',
@@ -15,7 +17,7 @@ const AddPropertyForm = () => {
     locality: '',
     nearbyHospitals: '',
     nearbyColleges: '',
-    seller:userInfo._id
+    seller: userInfo._id
   });
 
   const fields = [
@@ -33,9 +35,37 @@ const AddPropertyForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    const requestBody = {
+      description: formData.description,
+      address: formData.address,
+      bhk: formData.bhk,
+      price: formData.price,
+      locality: formData.locality,
+      nearbyHospitals: formData.nearbyHospitals,
+      nearbyColleges: formData.nearbyColleges,
+      sellerId:formData.seller
+    };
+
+    dispatch(addProperty(requestBody)).then((response) => {
+      if (response.meta.requestStatus === "fulfilled") {
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+        setFormData({
+          description: '',
+          address: '',
+          bhk: '',
+          price: '',
+          locality: '',
+          nearbyHospitals: '',
+          nearbyColleges: '',
+          seller:''
+        });
+      }
+
+    });
   };
 
   return (
