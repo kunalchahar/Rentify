@@ -39,6 +39,18 @@ export const getPropertyBySeller = createAsyncThunk(
       }
     }
   );
+
+  export const deleteProperty = createAsyncThunk(
+    "property/deleteProperty",
+    async(propertyId, {rejectWithValue}) => {
+      try{
+        const response = await api.delete(`/properties/property?propertyId=${propertyId}`);
+        return propertyId;
+      }catch(error){
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  )
   
 
 const initialState = {
@@ -102,6 +114,25 @@ const propertySlice = createSlice({
         state.success = true;
       })
       .addCase(getPropertyBySeller.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      // deleteProperty
+      .addCase(deleteProperty.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(deleteProperty.fulfilled, (state, action) => {
+        state.loading = false;
+        const newProperties = state.properties.filter(
+          (property) => property._id !== action.payload
+        );
+        state.properties = newProperties;
+        state.success = true;
+      })
+      .addCase(deleteProperty.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;

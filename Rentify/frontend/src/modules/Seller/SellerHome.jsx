@@ -8,10 +8,10 @@ import Loader from "../../components/Loader"
 const SellerHome = () => {
 
   const {loading, properties} = useSelector((state)=>state.property);
-  console.log(properties)
   const {userInfo} = useSelector((state)=>state.auth);
   const sellerId = userInfo._id;
   const dispatch = useDispatch();
+
 
 
 
