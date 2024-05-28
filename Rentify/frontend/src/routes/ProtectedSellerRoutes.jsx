@@ -3,7 +3,7 @@ import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
 import { useSelector } from 'react-redux';
 
-const SellerRoutes = (props) => {
+const ProtectedSellerRoutes = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -38,4 +38,4 @@ const SellerRoutes = (props) => {
     }
 };
 
-export default SellerRoutes;
+export default ProtectedSellerRoutes;

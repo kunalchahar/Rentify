@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../StoreSlices/authSlice";
 
-const BrokerSidebar = () => {
+const SellerSidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout =()=>{
@@ -25,12 +25,12 @@ const BrokerSidebar = () => {
     {
       value: "Add Property",
       icon: <PresentationChartBarIcon className="h-5 w-5" />,
-      link: "/addProperty",
+      link: "addProperty",
     },
     {
       value: "My Properties",
       icon: <ShoppingBagIcon className="h-5 w-5" />,
-      link: "",
+      link: "/seller/properties",
     },
   ];
 
@@ -57,4 +57,4 @@ const BrokerSidebar = () => {
   );
 };
 
-export default BrokerSidebar;
+export default SellerSidebar;

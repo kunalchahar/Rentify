@@ -4,12 +4,6 @@ import UserRoutes from "./routes/Routes";
 import HomeNavbar from "./modules/HomePage/Navbar";
 
 const App = () => {
-  const [userType, setUserType] = useState("buyer");
-  const { userInfo } = useSelector((state) => state.auth);
-
-  // useEffect(()=>{
-  //   setUserType(userInfo.userType);
-  // },[userType])
 
   return (
     <div className="h-screen max-h-screen w-screen max-w-screen flex flex-col">

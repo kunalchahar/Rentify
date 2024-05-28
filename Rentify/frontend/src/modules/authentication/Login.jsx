@@ -49,7 +49,7 @@ const Login = () => {
           email: "",
           password: "",
         });
-        navigate("/buyer/home"); // Redirect to the Buyer Home Page after successful login
+        navigate("/seller"); // Redirect to the Buyer Home Page after successful login
       }
       
     });
