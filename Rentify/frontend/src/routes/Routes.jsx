@@ -1,13 +1,15 @@
-import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Login from "../modules/authentication/Login";
 import Signup from "../modules/authentication/Register";
 import BuyerRoutes from "../routes/ProtectedBuyerRoutes";
 import ProtectedSellerRoutes from "../routes/ProtectedSellerRoutes"; // Ensure this is the correct import path
-import SellerHome from "../modules/Broker/SellerHome";
+import SellerHome from "../modules/Seller/SellerHome";
 import HomePage from "../modules/HomePage/HomePage";
 import PageNotFound from "../components/PageNotFound";
-import AddPropertyForm from "../modules/Broker/AddPropertyForm";
+import AddPropertyForm from "../modules/Seller/AddPropertyForm";
+import AllProperties from "../modules/Seller/AllProperties";
+import { useSelector } from "react-redux";
 
 const AppRoutes = () => {
   return (
@@ -26,7 +28,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedSellerRoutes />}>
         <Route path="/seller" element={<SellerHome />}>
           <Route path="addProperty" element={<AddPropertyForm />} />
-          {/* <Route path="properties" element={<MyProperties />} /> */}
+          <Route path="properties" element={<AllProperties />} />
           {/* Add other seller-specific routes here */}
         </Route>
       </Route>

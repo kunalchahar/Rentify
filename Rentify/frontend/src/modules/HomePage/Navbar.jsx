@@ -14,7 +14,6 @@ import { logout } from "../../StoreSlices/authSlice";
 const HomeNavbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(isAuthenticated);
 
   const navItems = ["Properties", "Prices", "Localities"];
   const dispatch = useDispatch();
@@ -42,7 +41,6 @@ const HomeNavbar = () => {
     </ul>
   );
 
-  console.log(isAuthenticated);
 
   return (
     <>

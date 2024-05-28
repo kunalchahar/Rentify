@@ -55,7 +55,7 @@ const getAllProperties = async (req, res) => {
 
 const getProperty = async(req, res) => {
 
-    const {sellerId} = req.body;
+    const {sellerId} = req.query;
 
     try{
         const property = await Property.find({seller: sellerId})

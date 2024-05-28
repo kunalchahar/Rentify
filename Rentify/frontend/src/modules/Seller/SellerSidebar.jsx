@@ -30,15 +30,15 @@ const SellerSidebar = () => {
     {
       value: "My Properties",
       icon: <ShoppingBagIcon className="h-5 w-5" />,
-      link: "/seller/properties",
+      link: "properties",
     },
   ];
 
   return (
-    <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-screen max-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray">
-          Sidebar
+        <Typography variant="h4" color="blue-gray">
+          Rentify
         </Typography>
       </div>
       <List>

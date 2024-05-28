@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import UserRoutes from "./routes/Routes";
 import HomeNavbar from "./modules/HomePage/Navbar";
 
