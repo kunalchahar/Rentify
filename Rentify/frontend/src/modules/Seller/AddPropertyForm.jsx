@@ -52,6 +52,7 @@ const AddPropertyForm = () => {
 
     dispatch(addProperty(requestBody)).then((response) => {
       if (response.meta.requestStatus === "fulfilled") {
+        navigate("/seller/properties");
         if (formRef.current) {
           formRef.current.reset();
         }
@@ -64,10 +65,8 @@ const AddPropertyForm = () => {
           nearbyHospitals: '',
           nearbyColleges: '',
           seller:''
-        });
-        navigate("/seller/properties");
+        });     
       }
-
     });
   };
 

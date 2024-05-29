@@ -9,7 +9,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formRef = useRef(null);
-  const {isAuthenticated} = useSelector((state)=>state.auth);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -41,6 +40,7 @@ const Login = () => {
 
     dispatch(loginUser(requestBody)).then((response) => {
       if (response.meta.requestStatus === "fulfilled") {
+        
         if (formRef.current) {
           formRef.current.reset();
         }
@@ -48,9 +48,13 @@ const Login = () => {
           email: "",
           password: "",
         });
-        navigate("/seller/properties"); // Redirect to the Buyer Home Page after successful login
+        const userType = response.payload.user.userType;
+        if(userType === "buyer"){
+          navigate("/buyer");
+        }else if(userType==="seller"){
+          navigate("/seller/properties");
+        }
       }
-      
     });
   };
 

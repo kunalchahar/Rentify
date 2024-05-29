@@ -80,6 +80,7 @@ const Register = () => {
             username: '',
             userType: ''
          });
+         navigate("/login");
       } catch (error) {
          console.error('Error submitting the form:', error);
       }

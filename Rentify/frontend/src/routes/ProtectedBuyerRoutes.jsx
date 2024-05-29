@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import { useSelector } from 'react-redux';
 
-const BuyerRoutes = (props) => {
+const ProtectedBuyerRoutes = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -14,15 +13,20 @@ const BuyerRoutes = (props) => {
         const decodedToken = jwtDecode(token);
         userType = decodedToken.role;
     }
+
     const presentPage = () => {
-        navigate(-1);
+
     };
 
     if (!token) return <Navigate to="/login" />;
 
     useEffect(() => {
         if (token && userType !== "buyer") {
-            presentPage();
+         if (location.key !== "default") {
+            navigate(-1);
+        } else {
+            navigate("/login");
+        }
         }
     }, [token, userType]);
 
@@ -33,4 +37,4 @@ const BuyerRoutes = (props) => {
     }
 };
 
-export default BuyerRoutes;
+export default ProtectedBuyerRoutes;

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Login from "../modules/authentication/Login";
 import Signup from "../modules/authentication/Register";
-import BuyerRoutes from "../routes/ProtectedBuyerRoutes";
 import ProtectedSellerRoutes from "../routes/ProtectedSellerRoutes"; // Ensure this is the correct import path
+import ProtectedBuyerRoutes from "../routes/ProtectedBuyerRoutes";
 import SellerHome from "../modules/Seller/SellerHome";
 import HomePage from "../modules/HomePage/HomePage";
 import PageNotFound from "../components/PageNotFound";
 import AddPropertyForm from "../modules/Seller/AddPropertyForm";
 import AllProperties from "../modules/Seller/AllProperties";
-import { useSelector } from "react-redux";
+import BuyerHomePage from "../modules/Buyer/BuyerHomePage";
 
 const AppRoutes = () => {
   return (
@@ -20,9 +20,12 @@ const AppRoutes = () => {
       <Route path="/signup" element={<Signup />} />
 
       {/* Buyer Routes */}
-      <Route path="/buyer/*" element={<BuyerRoutes />}>
-        {/* Add other buyer-specific routes here */}
-      </Route>
+      <Route element={<ProtectedBuyerRoutes />}>
+        <Route path="/buyer" element={<BuyerHomePage/>} >
+
+          </Route>
+        </Route>
+  
 
       {/* Seller Routes */}
       <Route element={<ProtectedSellerRoutes />}>
