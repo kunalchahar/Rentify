@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { Button, Input, Card, CardBody, Typography, useSelect } from '@material-tailwind/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProperty } from '../../StoreSlices/propertiesSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AddPropertyForm = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -63,6 +65,7 @@ const AddPropertyForm = () => {
           nearbyColleges: '',
           seller:''
         });
+        navigate("/seller/properties");
       }
 
     });

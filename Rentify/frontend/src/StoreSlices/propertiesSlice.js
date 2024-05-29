@@ -5,7 +5,6 @@ import api from "../Axios"; // Make sure your Axios instance is correctly set up
 export const addProperty = createAsyncThunk(
   "property/addProperty",
   async (propertyData, { rejectWithValue }) => {
-    console.log(propertyData)
     try {
       const response = await api.post("/properties/addProperty", propertyData);
       return response.data;

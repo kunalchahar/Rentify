@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ArchiveBoxXMarkIcon, PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import {useNavigate} from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -25,6 +26,7 @@ const TABLE_HEAD = ["Description", "Address", "BHK", "Price", "Locality", "Nearb
 
 const DataTable = ({ properties }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [editPropertyData, setEditPropertyData] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
 
@@ -49,7 +51,7 @@ const DataTable = ({ properties }) => {
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <Button variant="outlined" size="sm">View All</Button>
-              <Button className="flex items-center gap-3" color="blue" size="sm">
+              <Button className="flex items-center gap-3" color="blue" onClick={()=>navigate("/seller/addProperty")} size="sm">
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Property
               </Button>
             </div>
