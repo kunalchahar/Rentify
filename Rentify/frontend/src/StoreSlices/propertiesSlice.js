@@ -27,6 +27,18 @@ export const getAllProperties = createAsyncThunk(
   }
 );
 
+export const updateProperty = createAsyncThunk(
+  'properties/updateProperty',
+  async ({ propertyId, updatedProperty }, {rejectWithValue}) => {
+    try {
+      const response = await api.put(`/properties/property?propertyId=${propertyId}`, updatedProperty);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 // Define an async thunk for fetching properties by seller ID
 export const getPropertyBySeller = createAsyncThunk(
     "property/getPropertyBySeller",
@@ -133,6 +145,25 @@ const propertySlice = createSlice({
         state.success = true;
       })
       .addCase(deleteProperty.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(updateProperty.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(updateProperty.fulfilled, (state, action) => {
+        state.success = true;
+        const updatedProperty = action.payload;
+        const index = state.properties.findIndex(property => property._id === updatedProperty._id);
+        if (index !== -1) {
+          state.properties[index] = updatedProperty;
+        }
+        state.loading=false;
+      })
+      .addCase(updateProperty.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.success = false;

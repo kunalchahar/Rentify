@@ -90,9 +90,8 @@ const deleteProperty = async(req, res) => {
 }
 
 const updateProperty = async (req, res) => {
-    const { propertyId } = req.params; // Assuming propertyId is passed as a URL parameter
+    const { propertyId } = req.query; // Assuming propertyId is passed as a URL parameter
     const { description, address, bhk, price, locality, nearbyHospitals, nearbyColleges } = req.body;
-
     try {
         // Check if the property exists
         let property = await Property.findById(propertyId);

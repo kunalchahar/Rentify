@@ -6,9 +6,9 @@ const AllProperties = () => {
   const { properties } = useSelector((state) => state.property);
   
   return (
-    <div>
+    <>
       <DataTable properties={properties} />
-    </div>
+    </>
   );
 };
 

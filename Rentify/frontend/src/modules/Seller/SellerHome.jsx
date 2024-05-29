@@ -27,7 +27,7 @@ const SellerHome = () => {
       <div className="py-4 bg-gray-50">
         <SellerSidebar />
       </div>
-      <div className="w-full h-screen max-h-screen bg-gray-50 py-4 pl-4">
+      <div className="w-full max-w-[calc(100vw-18rem)] h-screen max-h-screen bg-gray-50 p-4">
         <Outlet />
       </div>
     </div>
