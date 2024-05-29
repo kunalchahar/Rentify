@@ -7,8 +7,22 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
+import { updateProperty } from "../../StoreSlices/propertiesSlice";
 
 const EditPropertyForm = ({ property }) => {
+
+  const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState({
+      description: property.description,
+      address: property.address, 
+      bhk: property.bhk,
+      price: property.price,
+      locality: property.locality,
+      nearbyHospitals: property.nearbyHospitals,
+      nearbyColleges: property.nearbyColleges,
+    })
 
 
     const TABLE_HEAD = [
@@ -19,7 +33,6 @@ const EditPropertyForm = ({ property }) => {
         { placeholder: "Locality", accessor: "locality" },
         { placeholder: "Nearby Hospitals", accessor: "nearbyHospitals" },
         { placeholder: "Nearby Colleges", accessor: "nearbyColleges" },
-        { placeholder: "Date Added", accessor: "createdAt" },
       ];
 
       
@@ -29,8 +42,27 @@ const EditPropertyForm = ({ property }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+
+    e.preventDefault()
     // Handle form submission logic here
+    const reqBody = {
+      description: formData.description,
+      address: formData.address, 
+      bhk: formData.bhk,
+      price: formData.price,
+      locality: formData.locality,
+      nearbyHospitals: formData.nearbyHospitals,
+      nearbyColleges: formData.nearbyColleges,
+    }
+
+    const propertyId = property._id;
+
+    dispatch(updateProperty({ propertyId, updatedProperty: reqBody }))
+
+
+      
+    
   };
 
   return (
@@ -48,7 +80,7 @@ const EditPropertyForm = ({ property }) => {
                     label={item.placeholder}
                     name={item.accessor}
                     size="lg"
-                    value={property[item.accessor]}
+                    value={formData[item.accessor]}
                     onChange={handleChange}
                   />
                 </div>

@@ -41,8 +41,8 @@ const DataTable = ({ properties }) => {
   };
 
   return (
-    <div className="h-screen max-h-screen">
-      <Card className="h-full w-full pt-6 px-4">
+    <div className="h-screen max-h-screen w-full">
+      <Card className="h-full max-w-full w-full pt-6 px-4">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
@@ -69,7 +69,7 @@ const DataTable = ({ properties }) => {
             </div>
           </div>
         </CardHeader>
-        <CardBody className=" px-0">
+        <CardBody className=" px-0 max-w-full overflow-scroll">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>

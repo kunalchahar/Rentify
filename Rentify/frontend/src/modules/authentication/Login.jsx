@@ -10,7 +10,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const formRef = useRef(null);
   const {isAuthenticated} = useSelector((state)=>state.auth);
-  console.log(isAuthenticated);
 
   const [formData, setFormData] = useState({
     email: "",
