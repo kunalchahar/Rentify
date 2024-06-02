@@ -5,153 +5,127 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
+  Dialog,
+  DialogHeader,
+  DialogBody,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, PowerIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../StoreSlices/authSlice";
- 
-export default function BuyerSidebar() {
-  const [open, setOpen] = React.useState(0);
- 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
+import { setBHKFilter, setCityFilter, setPriceFilter } from "../../StoreSlices/propertyFilterSlice";
+
+const Sidebar = () => {
+
+  const filters = [
+    {
+      label: "BHK Type",
+      options: ["1", "2", "3", "4"],
+    },
+    {
+      label: "Price",
+      options: ["0-10000", "10000-20000", "20000-30000", "30000-40000","40000-50000"],
+    },
+    {
+      label: "Location",
+      options: ["Delhi", "Gurugram", "Noida", "Gaziabad"],
+    },
+  ];
+
+  const dispatch = useDispatch();
+
+  const handleFilterChange = (filter, option) => {
+    switch (filter) {
+      case "BHK Type":
+        dispatch(setBHKFilter(option));
+        break;
+      case "Price":
+        dispatch(setPriceFilter(option));
+        break;
+      case "Location":
+        dispatch(setCityFilter(option));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const [openModals, setOpenModals] = React.useState({});
+
+  const toggleModal = (filter) => {
+    setOpenModals((prevState) => ({
+      ...prevState,
+      [filter]: !prevState[filter],
+    }));
+  };
+
+  const handleOptionClick = (filter, option) => {
+    handleFilterChange(filter, option);
+    toggleModal(filter);
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const handleLogout =()=>{
+  const handleLogout = () => {
     dispatch(logout());
-    navigate("/login")
-  }
- 
+    navigate("/login");
+  };
+
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-      <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray">
-          Filters
-        </Typography>
-      </div>
-      <List>
-        <Accordion
-          open={open === 1}
-          icon={
-            <ChevronDownIcon
-              strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-            />
-          }
-        >
-          <ListItem className="p-0" selected={open === 1}>
-            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
-              <ListItemPrefix>
-                <PresentationChartBarIcon className="h-5 w-5" />
-              </ListItemPrefix>
+    <>
+      <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <div className="mb-2 p-4">
+          <Typography variant="h5" color="blue-gray">
+            Filters
+          </Typography>
+        </div>
+        <List>
+          {filters.map((filter) => (
+            <ListItem key={filter.label} onClick={() => toggleModal(filter.label)}>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                Dashboard
+                {filter.label} 
               </Typography>
-            </AccordionHeader>
+            </ListItem>
+          ))}
+
+          <ListItem>
+            <ListItemPrefix>
+              <Cog6ToothIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Settings
           </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Analytics
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Reporting
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Projects
-              </ListItem>
-            </List>
-          </AccordionBody>
-        </Accordion>
-        <Accordion
-          open={open === 2}
-          icon={
-            <ChevronDownIcon
-              strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
-            />
-          }
+
+          <ListItem onClick={handleLogout}>
+            <ListItemPrefix>
+              <PowerIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Log Out
+          </ListItem>
+        </List>
+      </Card>
+
+      {filters.map((filter) => (
+        <Dialog
+          key={filter.label}
+          open={openModals[filter.label]}
+          handler={() => toggleModal(filter.label)}
         >
-          <ListItem className="p-0" selected={open === 2}>
-            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
-              <ListItemPrefix>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Typography color="blue-gray" className="mr-auto font-normal">
-                E-Commerce
-              </Typography>
-            </AccordionHeader>
-          </ListItem>
-          <AccordionBody className="py-1">
+          <DialogHeader className="text-blue-700">{filter.label}</DialogHeader>
+          <DialogBody>
             <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Orders
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                Products
-              </ListItem>
+              {filter.options.map((option) => (
+                <ListItem
+                  key={option}
+                  onClick={() => handleOptionClick(filter.label, option)}
+                >
+                  {option}
+                </ListItem>
+              ))}
             </List>
-          </AccordionBody>
-        </Accordion>
-        <ListItem>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Inbox
-          <ListItemSuffix>
-            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-          </ListItemSuffix>
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem onClick={()=>handleLogout()}>
-          <ListItemPrefix>
-            <PowerIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Log Out
-        </ListItem>
-      </List>
-    </Card>
+          </DialogBody>
+        </Dialog>
+      ))}
+    </>
   );
-}
+};
+
+export default Sidebar;
